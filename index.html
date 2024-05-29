@@ -1,11 +1,835 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>File Tools</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <!-- Bootstrap DateTimePicker JS -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Bootstrap DateTimePicker CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.0/jszip.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .tab {
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tab button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin: 0 2px;
+        }
+
+        .tab button:hover {
+            background-color: #0056b3;
+        }
+
+        .tab button.active {
+            background-color: #0056b3;
+        }
+
+        .tabcontent {
+            display: none;
+        }
+
+        .message {
+            margin-top: 20px;
+        }
+
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            margin-top: 20px;
+        }
+    </style>
 </head>
+
 <body>
-    xxxxxxxxx
+
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Login')">Đăng nhập</button>
+        <button class="tablinks" onclick="openTab(event, 'ExportPurchaseInvoiceTool')">Hóa đơn mua</button>
+        <button class="tablinks" onclick="openTab(event, 'ExportSoldInvoiceTool')">Hóa đơn bán</button>
+        <button class="tablinks" onclick="openTab(event, 'RenameTool')">Đổi tên hóa đơn</button>
+    </div>
+
+    <div id="Login" class="tabcontent" style="display: block;">
+        <div class="container mt-4">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="captcha">Mã captcha</label>
+                    <canvas id="canvas" width="200" height="40"></canvas>
+                    <input type="text" class="form-control" id="captcha" placeholder="Enter captcha">
+                </div>
+                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+            </form>
+            <div id="successMessage" style="display: none;color: green;">
+                <h4>Bạn đã đăng nhập thành công.</h4>
+            </div>
+        </div>
+    </div>
+
+    <div id="RenameTool" class="tabcontent">
+        <div class="modal" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label for="fileInput">Chọn file hóa đơn với định dạng zip:</label>
+        <input type="file" id="fileInput" accept=".zip">
+        <button onclick="renameFiles()">Đổi tên</button>
+        <div class="message" id="message"></div>
+    </div>
+
+    <div id="ExportPurchaseInvoiceTool" class="tabcontent">
+        <div class="modal" id="loadingModal1" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div class="form-group">
+                <label for="kqkt">Kết quả kiểm tra</label>
+                <select id="kqkt" class="form-control">
+                    <option value="5">Đã cấp mã hóa đơn</option>
+                    <option value="6">Tổng cục thuế đã nhận không mã</option>
+                    <option value="8">Tổng cục thuế đã nhận hóa đơn có mã khởi tạo từ máy tính tiền</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="startDate">Ngày bắt đầu</label>
+                <input type="date" id="startDate" name="startDateTime" class="form-control" value="2023-12-03">
+            </div>
+            <div class="form-group">
+                <label for="endDate">Ngày kết thúc</label>
+                <input type="date" id="endDate" name="endDateTime" class="form-control" value="2024-01-02">
+            </div>
+            <button onclick="fetchAndZipFilesForPurchasedInvoices()" id="btnPurchasedInvoices"
+                class="btn btn-primary">Tải hóa đơn mua</button>
+            <p id="spRequiredLoginSale" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để tải hóa đơn
+            </p>
+
+        </div>
+    </div>
+
+    <div id="ExportSoldInvoiceTool" class="tabcontent">
+        <div class="modal" id="loadingModal2" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div class="form-group">
+                <label for="startDate">Ngày bắt đầu</label>
+                <input type="date" id="startDatesold" name="startDateTime" class="form-control" value="2023-12-03">
+            </div>
+            <div class="form-group">
+                <label for="endDate">Ngày kết thúc</label>
+                <input type="date" id="endDatesold" name="endDateTime" class="form-control" value="2024-01-02">
+            </div>
+            <button onclick="fetchAndZipFilesForSoldInvoices()" id="btnSoldInvoices" class="btn btn-primary">Tải hóa đơn
+                bán</button>
+            <span id="spRequiredLoginPurchase" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để tải
+                hóa đơn</span>
+        </div>
+    </div>
+
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalBody"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Lỗi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="errorModalBody" style="color: rgb(129, 28, 28);">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const getKey = async (url, token) => {
+            // Define the URL
+            const urlkey = 'https://beautiful-fudge-8b4728.netlify.app/';
+            const getKey = await fetch(urlkey, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!getKey.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            return await getKey.text();
+        }
+
+        function showMessage(message, type, tool) {
+            const messageDiv = document.getElementById(`${tool}Message`);
+            messageDiv.innerHTML = message;
+            messageDiv.className = type;
+        }
+
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName('tabcontent');
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = 'none';
+            }
+
+            const tablinks = document.getElementsByClassName('tablinks');
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(' active', '');
+            }
+
+            document.getElementById(tabName).style.display = 'block';
+            evt.currentTarget.className += ' active';
+        }
+
+        let selectedFile;
+
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            selectedFile = event.target.files[0];
+        });
+
+        async function renameFiles() {
+            try {
+                if (!selectedFile) {
+                    showMessage('Please select a ZIP file.', 'error');
+                    return;
+                }
+                $('#loadingModal').modal('show');
+                const zipFile = await JSZip.loadAsync(selectedFile);
+
+                for (const zipEntryName in zipFile.files) {
+                    if (zipEntryName.endsWith('.zip')) {
+                        const subZipFile = await zipFile.files[zipEntryName].async('blob');
+                        const subZip = await JSZip.loadAsync(subZipFile);
+
+                        const newNamePrefix = zipEntryName.split('.zip')[0];
+
+                        for (const subZipEntryName in subZip.files) {
+                            if (subZipEntryName.endsWith('invoice.html')) {
+                                const content = await subZip.files[subZipEntryName].async('string');
+                                subZip.file(`${newNamePrefix}.html`, content);
+                                delete subZip.files[subZipEntryName];
+                            }
+
+                            if (subZipEntryName.endsWith('details.js')) {
+                                const content = await subZip.files[subZipEntryName].async('string');
+                                subZip.file(`${newNamePrefix}.js`, content);
+                                delete subZip.files[subZipEntryName];
+                            }
+
+                            if (subZipEntryName.endsWith('invoice.xml')) {
+                                const content = await subZip.files[subZipEntryName].async('string');
+                                subZip.file(`${newNamePrefix}.xml`, content);
+                                delete subZip.files[subZipEntryName];
+                            }
+
+                            if (subZipEntryName.endsWith('sign-check.jpg')) {
+                                const content = await subZip.files[subZipEntryName].async('string');
+                                subZip.file(`${newNamePrefix}.html`, content);
+                                delete subZip.files[subZipEntryName];
+                            }
+
+                            if (subZipEntryName.endsWith('viewinvoice-bg.jpg')) {
+                                const content = await subZip.files[subZipEntryName].async('string');
+                                subZip.file(`${newNamePrefix}.jpg`, content);
+                                delete subZip.files[subZipEntryName];
+                            }
+
+                        }
+
+                        await zipFile.file(zipEntryName, await subZip.generateAsync({ type: 'blob' }));
+                    }
+                }
+
+                await zipFile.generateAsync({ type: 'blob' }).then(blob => {
+                    saveAs(blob, 'invoice_files_renamed.zip');
+                });
+                $('#loadingModal').modal('hide');
+                showMessage('Đổi tên file thành công', 'success');
+            } catch (error) {
+                console.error('Error:', error);
+                $('#loadingModal').modal('hide');
+                handleError("Xảy ra lỗi khi đổi tên file, vui lòng thử lại")
+            }
+        }
+
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = message;
+            messageDiv.className = type;
+        }
+        function formatDate(dateString, isStart) {
+            const date = new Date(dateString);
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed
+            const day = date.getDate().toString().padStart(2, '0');
+            const year = date.getFullYear().toString();
+            const time = isStart ? '00:00:00' : '23:59:59';
+            return `${day}/${month}/${year}T${time}`;
+        }
+
+        function removeAccents(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ''); // remove white spaces
+        }
+
+        function formatDateInvoice(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getUTCDate()).padStart(2, '0');
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const year = date.getUTCFullYear();
+
+            return `${day}_${month}_${year}`;
+        }
+
+        let baseUrl = 'https://hoadondientu.gdt.gov.vn:30000/query/invoices/export-xml';
+        const fetchAllPurchasedInvoicesData = async () => {
+            try {
+
+                let token = localStorage.getItem('token');
+                // Get the values of the startDate and endDate input fields
+                const startDateValue = document.getElementById('startDate').value;
+                const endDateValue = document.getElementById('endDate').value;
+
+                // Format the dates to match the desired format (MM/DD/YYYY)
+                const formattedStartDate = formatDate(startDateValue, true);
+                const formattedEndDate = formatDate(endDateValue);
+
+                const ketQuaKiemTra = document.getElementById('kqkt').value;
+                const getUrl = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/purchase?sort=tdlap:desc,khmshdon:asc,shdon:desc&size=15&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};ttxly==${ketQuaKiemTra}`;
+
+                let size = 1;
+                let state = '';
+                var response1 = await fetch(getUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json(); // Parse the response body as JSON
+                    })
+                    .then(data => {
+                        size = data.total; // Assuming 'total' is a property in the JSON response
+                        console.log(size);
+                    })
+                    .catch(error => {
+                        handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+                    });
+
+                const getUrl2 = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/purchase?sort=tdlap:desc,khmshdon:asc,shdon:desc&size=50&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};ttxly==${ketQuaKiemTra}`;
+
+                const response = await fetch(getUrl2, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const responseData = await response.json();
+                state = responseData.state;
+
+                let getUrl3 = null;
+                let getUrl4 = null;
+                let state3 = '';
+                let responseData3 = [];
+                let responseData4 = [];
+
+                if (state != null && state != '') {
+                    getUrl3 = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/purchase?sort=tdlap:desc,khmshdon:asc,shdon:desc&size=50&state=${state}&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};ttxly==${ketQuaKiemTra}`;
+                }
+
+                if (getUrl3) {
+                    const response3 = await fetch(getUrl3, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response3.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    responseData3 = await response3.json();
+                    state3 = responseData3.state;
+
+
+                    if (state3 != null && state3 != '') {
+                        getUrl4 = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/purchase?sort=tdlap:desc,khmshdon:asc,shdon:desc&size=50&state=${state3}&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};ttxly==${ketQuaKiemTra}`;
+                    }
+
+                    if (getUrl4) {
+                        const response4 = await fetch(getUrl4, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        if (!response4.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+
+                        responseData4 = await response4.json();
+                    }
+                }
+                const combinedData = [...responseData.datas, ...(responseData3.datas ?? []), ...(responseData4.datas ?? [])];
+                // Extracting specific properties from each object in the 'datas' array
+                const extractedData = combinedData.map(item => ({
+                    nbmst: item.nbmst,
+                    khhdon: item.khhdon,
+                    shdon: item.shdon,
+                    khmshdon: item.khmshdon,
+                    nbten: item.nbten,
+                    tdlap: item.tdlap
+                }));
+
+                const mappedData = extractedData.map(item => {
+                    const urlParams = new URLSearchParams({
+                        nbmst: item.nbmst,
+                        khhdon: item.khhdon,
+                        shdon: item.shdon,
+                        khmshdon: item.khmshdon
+                    });
+
+                    const companyName = removeAccents(item.nbten);
+                    const createdInvoiceDate = formatDateInvoice(item.tdlap);
+
+                    return {
+                        'url': `${baseUrl}?${urlParams.toString()}`,
+                        'fileName': `${item.nbmst}_${companyName}_${item.shdon}_${createdInvoiceDate}`
+                    };
+                });
+
+                return mappedData;
+            } catch (error) {
+                handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+                return null;
+            }
+        };
+
+        const fetchData = async (url, token) => {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+            }
+            return response.blob();
+        };
+
+        const fetchAndZipFilesForPurchasedInvoices = async () => {
+            // const key = await getKey();
+            // debugger;
+            // if (key != 'hehehehheeh222') return;
+            try {
+                $('#loadingModal1').modal('show');
+                let token = localStorage.getItem('token');
+
+                const datas = await fetchAllPurchasedInvoicesData();
+                const zip = new JSZip();
+                const totalItems = datas.length;
+
+                let index = 1;
+                for (const data of datas) {
+                    const fileBlobs = await fetchData(data.url, token);
+                    zip.file(`${index}_${data.fileName}.zip`, fileBlobs);
+                    index++;
+                }
+
+                const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(zipBlob);
+                link.download = 'invoice_files.zip';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                $('#loadingModal1').modal('hide');
+
+            } catch (error) {
+                console.error('Error:', error);
+                $('#loadingModal1').modal('hide');
+                handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+            }
+        };
+
+        const fetchAllSoldInvoicesData = async () => {
+            try {
+
+                let token = localStorage.getItem('token');
+                // Get the values of the startDate and endDate input fields
+                const startDateValue = document.getElementById('startDatesold').value;
+                const endDateValue = document.getElementById('endDatesold').value;
+
+                // Format the dates to match the desired format (MM/DD/YYYY)
+                const formattedStartDate = formatDate(startDateValue, true);
+                const formattedEndDate = formatDate(endDateValue);
+
+                const getUrl = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/sold?sort=tdlap:desc,khmshdon:asc,shdon:desc&size=15&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate}`;
+
+                let size = 1;
+                let state = '';
+                var response1 = await fetch(getUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json(); // Parse the response body as JSON
+                    })
+                    .then(data => {
+                        size = data.total; // Assuming 'total' is a property in the JSON response
+                        console.log(size);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                        handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+                    });
+
+                const getUrl2 = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/sold?sort=tdlap:desc,khmshdon:asc,shdon:desc&size=50&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate}`;
+
+                const response = await fetch(getUrl2, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const responseData = await response.json();
+                state = responseData.state;
+
+                let getUrl3 = null;
+                let getUrl4 = null;
+                let state3 = '';
+                let responseData3 = [];
+                let responseData4 = [];
+
+                if (state != null && state != '') {
+                    getUrl3 = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/sold?sort=tdlap:desc,khmshdon:asc,shdon:desc&size=50&state=${state}&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate}`;
+                }
+
+                if (getUrl3) {
+                    const response3 = await fetch(getUrl3, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response3.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    responseData3 = await response3.json();
+                    state3 = responseData3.state;
+
+
+                    if (state3 != null && state3 != '') {
+                        getUrl4 = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/sold?sort=tdlap:desc,khmshdon:asc,shdon:desc&size=50&state=${state3}&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate}`;
+                    }
+
+                    if (getUrl4) {
+                        const response4 = await fetch(getUrl4, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        if (!response4.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+
+                        responseData4 = await response4.json();
+                    }
+                }
+                const combinedData = [...responseData.datas, ...(responseData3.datas ?? []), ...(responseData4.datas ?? [])];
+                // Extracting specific properties from each object in the 'datas' array
+                const extractedData = combinedData.map(item => ({
+                    nbmst: item.nbmst,
+                    khhdon: item.khhdon,
+                    shdon: item.shdon,
+                    khmshdon: item.khmshdon,
+                    nbten: item.nbten,
+                    tdlap: item.tdlap
+                }));
+
+                const mappedData = extractedData.map(item => {
+                    const urlParams = new URLSearchParams({
+                        nbmst: item.nbmst,
+                        khhdon: item.khhdon,
+                        shdon: item.shdon,
+                        khmshdon: item.khmshdon
+                    });
+
+                    const companyName = removeAccents(item.nbten);
+                    const createdInvoiceDate = formatDateInvoice(item.tdlap);
+
+                    return {
+                        'url': `${baseUrl}?${urlParams.toString()}`,
+                        'fileName': `${item.nbmst}_${companyName}_${item.shdon}_${createdInvoiceDate}`
+                    };
+                });
+
+                return mappedData;
+            } catch (error) {
+                console.error('There was a problem with the request:', error);
+                handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+                return null;
+            }
+        };
+
+        const fetchAndZipFilesForSoldInvoices = async () => {
+            // const key = await getKey();
+            // if (key != 'hehehehheeh222') return;
+
+            try {
+                $('#loadingModal2').modal('show');
+                let token = localStorage.getItem('token');
+
+                const datas = await fetchAllSoldInvoicesData();
+                const zip = new JSZip();
+                const totalItems = datas.length;
+
+                let index = 1;
+                for (const data of datas) {
+                    const fileBlobs = await fetchData(data.url, token);
+                    zip.file(`${index}_${data.fileName}.zip`, fileBlobs);
+                    index++;
+                }
+
+                const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(zipBlob);
+                link.download = 'invoice_files.zip';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                $('#loadingModal2').modal('hide');
+
+            } catch (error) {
+                console.error('Error:', error);
+                $('#loadingModal2').modal('hide');
+                handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+            }
+        };
+    </script>
+    <script>
+        async function fetchAndRenderSVG() {
+            try {
+                const response = await fetch('https://hoadondientu.gdt.gov.vn:30000/captcha');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const data = await response.json();
+                localStorage.setItem('ckey', data.key);
+                const canvas = document.getElementById('canvas');
+                const ctx = canvas.getContext('2d');
+
+                const img = new Image();
+                const svgBlob = new Blob([data.content], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(svgBlob);
+
+                img.onload = () => {
+                    ctx.drawImage(img, 0, 0);
+                    URL.revokeObjectURL(url);
+
+                    // Here you can implement OCR or manual checking
+                    // For demonstration, I'm just logging that the image was loaded
+                    console.log('SVG rendered on canvas');
+                };
+                img.src = url;
+            } catch (error) {
+                console.error('Error fetching and rendering SVG:', error);
+                handleError("Xảy ra lỗi khi đăng nhập, vui lòng thử lại")
+            }
+        }
+
+        fetchAndRenderSVG();
+    </script>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const captcha = document.getElementById('captcha').value;
+            const ckey = localStorage.getItem('ckey'); // Assuming this is static or predefined
+
+            const body = {
+                username: username,
+                password: password,
+                cvalue: captcha,
+                ckey: ckey
+            };
+
+            try {
+                const response = await fetch('https://hoadondientu.gdt.gov.vn:30000/security-taxpayer/authenticate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const token = data.token; // Assuming the token is in the 'token' field
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('tokeExpired', Date.now());
+                    // Do something with the token, e.g., store it or redirect to another page
+                    document.getElementById('loginForm').style.display = 'none'; // Hide the login form
+                    document.getElementById('successMessage').style.display = 'block'; // Show the success message
+                    location.reload();
+                } else {
+                    handleError("Đăng nhập không thành công, vui lòng kiểm tra lại thông tin đăng nhập!");
+
+                }
+            } catch (error) {
+                handleError("Đăng nhập không thành công, vui lòng kiểm tra lại thông tin đăng nhập!");
+            }
+        });
+
+        function checkTokenExpired() {
+            const token = localStorage.getItem('token');
+            const tokenExpired = localStorage.getItem('tokeExpired');
+            const twentyFourHoursLater = tokenExpired + (24 * 60 * 60 * 1000);
+            if (token && tokenExpired && Date.now() < twentyFourHoursLater) {
+                document.getElementById('loginForm').style.display = 'none'; // Hide the login form
+                document.getElementById('successMessage').style.display = 'block'; // Show the success message
+
+            }
+            else {
+                document.getElementById('btnPurchasedInvoices').disabled = true;
+                document.getElementById('btnSoldInvoices').disabled = true;
+                document.getElementById('spRequiredLoginPurchase').style.display = 'block'; // Show the success message
+                document.getElementById('spRequiredLoginSale').style.display = 'block'; // Show the success message
+            }
+        }
+
+        function handleError(errorMessage) {
+            // Update the content of the modal body with the error message
+            document.getElementById('errorModalBody').innerHTML = errorMessage;
+
+            // Show the modal
+            $('#errorModal').modal('show');
+        }
+
+        checkTokenExpired();
+
+
+
+
+    </script>
+
+
 </body>
+
 </html>
