@@ -45,66 +45,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.0/jszip.min.js"></script>
   <link rel="stylesheet" href="style.css" />
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    .tab {
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .tab button {
-      background-color: #007BFF;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-      margin: 0 2px;
-    }
-
-    .tab button:hover {
-      background-color: #0056b3;
-    }
-
-    .tab button.active {
-      background-color: #0056b3;
-    }
-
-    .tabcontent {
-      display: none;
-    }
-
-    .message {
-      margin-top: 20px;
-    }
-
-
-    label {
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .message {
-      margin-top: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="index.css" />
 </head>
 
 <body>
@@ -117,7 +58,7 @@
         <div class="col-lg-12">
           <nav class="navbar navbar-expand-lg">
             <h4 style="color: #fff;">
-             3S Invoice
+              3S Invoice
             </h4>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNine"
               aria-controls="navbarNine" aria-expanded="false" aria-label="Toggle navigation">
@@ -209,136 +150,129 @@
               <button class="tablinks" onclick="openTab(event, 'ExportPurchaseInvoiceTool')">Hóa đơn mua</button>
               <button class="tablinks" onclick="openTab(event, 'ExportSoldInvoiceTool')">Hóa đơn bán</button>
               <button class="tablinks" onclick="openTab(event, 'RenameTool')">Đổi tên hóa đơn</button>
-          </div>
-      
-          <div id="Login" class="tabcontent" style="display: block;">
+            </div>
+
+            <div id="Login" class="tabcontent" style="display: block;">
               <div class="container mt-4">
-                  <form id="loginForm">
-                      <div class="form-group">
-                          <label for="username">Tên đăng nhập</label>
-                          <input type="text" class="form-control" id="username" placeholder="Enter username">
-                      </div>
-                      <div class="form-group">
-                          <label for="password">Mật khẩu</label>
-                          <input type="password" class="form-control" id="password" placeholder="Password">
-                      </div>
-                      <div class="form-group">
-                          <label for="captcha">Mã captcha</label>
-                          <canvas id="canvas" width="200" height="40"></canvas>
-                          <input type="text" class="form-control" id="captcha" placeholder="Enter captcha">
-                      </div>
-                      <button type="submit" class="btn btn-primary">Đăng nhập</button>
-                  </form>
-                  <div id="successMessage" style="display: none;color: green;">
-                      <h4>Bạn đã đăng nhập thành công.</h4>
+                <form id="loginForm">
+                  <div class="form-group">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập">
                   </div>
+                  <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu">
+                  </div>
+                  <div class="form-group">
+                    <label for="captcha">Mã captcha</label>
+                    <canvas id="canvas" width="200" height="40"></canvas>
+                    <input type="text" class="form-control" id="captcha" placeholder="Nhập captcha">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                </form>
+                <div id="successMessage" style="display: none;">
+                  <h4 style="color: green;">Bạn đã đăng nhập thành công.</h4>
+                </div>
+                <button class="btn btn-primary" style="display: none; margin-top: 10px;" id="btnLogout"
+                  onclick="Logout()">Đăng xuất</button>
               </div>
-          </div>
-      
-          <div id="RenameTool" class="tabcontent">
+            </div>
+
+            <div id="RenameTool" class="tabcontent">
               <div class="modal" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                          <div class="modal-body text-center">
-                              <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only">Loading...</span>
-                              </div>
-                              <p>Loading...</p>
-                          </div>
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body text-center">
+                      <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
                       </div>
+                      <p>Loading...</p>
+                    </div>
                   </div>
+                </div>
               </div>
               <label for="fileInput">Chọn file hóa đơn với định dạng zip:</label>
               <input type="file" id="fileInput" accept=".zip">
               <button onclick="renameFiles()">Đổi tên</button>
               <div class="message" id="message"></div>
-          </div>
-      
-          <div id="ExportPurchaseInvoiceTool" class="tabcontent">
-              <div class="modal" id="loadingModal1" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                          <div class="modal-body text-center">
-                              <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only">Loading...</span>
-                              </div>
-                              <p>Loading...</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="container mt-4">
-                  <div class="form-group">
-                      <label for="kqkt">Kết quả kiểm tra</label>
-                      <select id="kqkt" class="form-control">
-                          <option value="5">Đã cấp mã hóa đơn</option>
-                          <option value="6">Tổng cục thuế đã nhận không mã</option>
-                          <option value="8">Tổng cục thuế đã nhận hóa đơn có mã khởi tạo từ máy tính tiền</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="startDate">Ngày bắt đầu</label>
-                      <input type="date" id="startDate" name="startDateTime" class="form-control" value="2023-12-03">
-                  </div>
-                  <div class="form-group">
-                      <label for="endDate">Ngày kết thúc</label>
-                      <input type="date" id="endDate" name="endDateTime" class="form-control" value="2024-01-02">
-                  </div>
-                  <button onclick="fetchAndZipFilesForPurchasedInvoices()" id="btnPurchasedInvoices"
-                      class="btn btn-primary">Tải hóa đơn mua</button>
-                  <p id="spRequiredLoginSale" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để tải hóa đơn
-                  </p>
-      
-              </div>
-          </div>
-      
-          <div id="ExportSoldInvoiceTool" class="tabcontent">
-              <div class="modal" id="loadingModal2" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                          <div class="modal-body text-center">
-                              <div class="spinner-border text-primary" role="status">
-                                  <span class="sr-only">Loading...</span>
-                              </div>
-                              <p>Loading...</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="container mt-4">
-                  <div class="form-group">
-                      <label for="startDate">Ngày bắt đầu</label>
-                      <input type="date" id="startDatesold" name="startDateTime" class="form-control" value="2023-12-03">
-                  </div>
-                  <div class="form-group">
-                      <label for="endDate">Ngày kết thúc</label>
-                      <input type="date" id="endDatesold" name="endDateTime" class="form-control" value="2024-01-02">
-                  </div>
-                  <button onclick="fetchAndZipFilesForSoldInvoices()" id="btnSoldInvoices" class="btn btn-primary">Tải hóa đơn
-                      bán</button>
-                  <span id="spRequiredLoginPurchase" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để tải
-                      hóa đơn</span>
-              </div>
-          </div>
-      
-          <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalBody"
-              aria-hidden="true">
-              <div class="modal-dialog" role="document">
+            </div>
+
+            <div id="ExportPurchaseInvoiceTool" class="tabcontent">
+              <div class="modal" id="loadingModal1" tabindex="-1" aria-labelledby="loadingModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title">Lỗi</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
+                    <div class="modal-body text-center">
+                      <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
                       </div>
-                      <div class="modal-body" id="errorModalBody" style="color: rgb(129, 28, 28);">
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      </div>
+                      <p>Loading...</p>
+                    </div>
                   </div>
+                </div>
               </div>
-          </div>
+              <div class="container mt-4">
+                <div class="form-group">
+                  <label for="kqkt">Kết quả kiểm tra</label>
+                  <select id="kqkt" class="form-control">
+                    <option value="5">Đã cấp mã hóa đơn</option>
+                    <option value="6">Tổng cục thuế đã nhận không mã</option>
+                    <option value="8">Tổng cục thuế đã nhận hóa đơn có mã khởi tạo từ máy tính tiền</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="startDate">Ngày bắt đầu</label>
+                  <input type="date" id="startDate" name="startDateTime" class="form-control" value="2023-12-03">
+                </div>
+                <div class="form-group">
+                  <label for="endDate">Ngày kết thúc</label>
+                  <input type="date" id="endDate" name="endDateTime" class="form-control" value="2024-01-02">
+                </div>
+                <button onclick="fetchAndZipFilesForPurchasedInvoices()" id="btnPurchasedInvoices"
+                  class="btn btn-primary">Tải hóa đơn mua</button>
+
+                <button onclick="downloadPurchaseExcel()" id="btndownloadpurchasedexcel" class="btn btn-primary">Tải
+                  bảng kê mua</button>
+                <p id="spRequiredLoginSale" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để tải hóa
+                  đơn
+                </p>
+
+              </div>
+            </div>
+
+            <div id="ExportSoldInvoiceTool" class="tabcontent">
+              <div class="modal" id="loadingModal2" tabindex="-1" aria-labelledby="loadingModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body text-center">
+                      <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                      <p>Loading...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container mt-4">
+                <div class="form-group">
+                  <label for="startDate">Ngày bắt đầu</label>
+                  <input type="date" id="startDatesold" name="startDateTime" class="form-control" value="2023-12-03">
+                </div>
+                <div class="form-group">
+                  <label for="endDate">Ngày kết thúc</label>
+                  <input type="date" id="endDatesold" name="endDateTime" class="form-control" value="2024-01-02">
+                </div>
+                <button onclick="fetchAndZipFilesForSoldInvoices()" id="btnSoldInvoices" class="btn btn-primary">Tải hóa
+                  đơn
+                  bán</button>
+                <button onclick="downloadSaleExcel()" id="btndownloadSaledexcel" class="btn btn-primary">Tải
+                  bảng kê bán</button>
+                <span id="spRequiredLoginPurchase" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để
+                  tải
+                  hóa đơn</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -440,11 +374,13 @@
         <div class="col-lg-6 col-12">
           <div class="about-five-content">
             <h6 class="small-title text-lg">Giới thiệu</h6>
-            <h2 class="main-title fw-bold">Công cụ giúp tải nhiều file hóa đơn điện tử từ <a href="https://hoadondientu.gdt.gov.vn/">https://hoadondientu.gdt.gov.vn/</a></h2>
+            <h2 class="main-title fw-bold">Công cụ giúp tải nhiều file hóa đơn điện tử từ <a
+                href="https://hoadondientu.gdt.gov.vn/">https://hoadondientu.gdt.gov.vn/</a></h2>
             <div class="about-five-tab">
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-who" role="tabpanel" aria-labelledby="nav-who-tab">
-                  <p>An toàn, tiện lợi, giúp tải tất cả hóa đơn trong 1 thao tác. Không lưu trữ bất kỳ thông tin gì của người dùng. Các bước sử dụng đơn giản.</p>
+                  <p>An toàn, tiện lợi, giúp tải tất cả hóa đơn trong 1 thao tác. Không lưu trữ bất kỳ thông tin gì của
+                    người dùng. Các bước sử dụng đơn giản.</p>
                   <ol>
                     <li>1. Đăng nhập</li>
                     <li>2. Chọn loại hóa đơn cần tải</li>
@@ -466,17 +402,18 @@
         <div class="col-lg-6 col-12">
           <div class="about-five-content">
             <h6 class="small-title text-lg">Tác giả</h6>
-            <h2 class="main-title fw-bold">Long Nguyen - Senior Software Engineer</h2>
-            <div class="about-five-tab">
-              <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-who" role="tabpanel" aria-labelledby="nav-who-tab">
-                  <p>Lập trình viên với 7 năm kinh nghiệm hỗ trợ và cung cấp các giải pháp phần mềm.</p>
-                  <p>Liên hệ để hỗ trợ viết thêm các chức năng về hóa đơn hoặc các công cụ liên quan phục vụ nghiệp vụ của bạn.
-                    <ul>
-                      <li>Facebook:<a href="https://www.facebook.com/Flamesofwars/">Nguyễn Đức Hoàng Long</a></li>
-                      <li>Linkedin:<a href="https://www.linkedin.com/in/long-nguyen-475947145/">Linkedin</a></li>
-                    </ul>
-                  </p>
+            <div class="about-five-tab" style="margin-top: 10px;">
+              <div class="tab-content" id="nav-tabContent" >
+                <div class="tab-pane fade show active" id="nav-who" role="tabpanel" aria-labelledby="nav-who-tab" style="margin-top: 20px;">
+                  <h4 style="margin-bottom: 10px;">Linh Nguyen - APC, DA</h4>
+                  <h4 style="margin-bottom: 10px;">Long Hoang - Senior Software Engineer</h4>
+                  <span>Liên hệ với chúng tôi để hỗ trợ viết thêm các chức năng về hóa đơn hoặc làm các công cụ liên quan phục vụ nghiệp vụ
+                    của bạn.
+                  </span>
+                  <ul style="margin-top: 0px;">
+                    <li>Facebook:<a href="https://www.facebook.com/Flamesofwars/">Nguyễn Đức Hoàng Long</a></li>
+                    <li>Linkedin:<a href="https://www.linkedin.com/in/long-nguyen-475947145/">Linkedin</a></li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -575,6 +512,26 @@
     <!-- container -->
   </section>
 
+  <div class="modal" tabindex="-1" role="dialog" id="errorModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Lỗi</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeError()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="errorModalBody"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseError"
+            onclick="closeError()">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!--====== ABOUT FIVE PART ENDS ======-->
 
   <a href="#" class="scroll-top btn-hover">
@@ -611,18 +568,92 @@
       overlayLeft.classList.remove("open");
     });
 
-    // ===== navbar nine sideMenu
-    let sideMenuLeftNine = document.querySelector(".navbar-nine .menu-bar");
-
-    sideMenuLeftNine.addEventListener("click", function () {
-      sidebarLeft.classList.add("open");
-      overlayLeft.classList.add("open");
-    });
   </script>
-  
-  <script src="https://main--5sinvoice.netlify.app/gavc.js"></script>
-  <script src="https://main--5sinvoice.netlify.app/xaxc.js"></script>
-  <script src="https://main--5sinvoice.netlify.app/ubbs.js"></script>
+
+<script src="https://main--5sinvoice.netlify.app/gavc.js"></script>
+<script src="https://main--5sinvoice.netlify.app/xaxc.js"></script>
+<script src="https://main--5sinvoice.netlify.app/ubbs.js"></script>
+
+  <script>
+    function Logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      location.reload();
+    }
+
+    function downloadPurchaseExcel() {
+      $('#loadingModal1').modal('show');
+      const token = localStorage.getItem('token');
+      const startDateValue = document.getElementById('startDate').value;
+      const endDateValue = document.getElementById('endDate').value;
+      const formattedStartDate = formatDate(startDateValue, true);
+      const formattedEndDate = formatDate(endDateValue);
+      const ketQuaKiemTra = document.getElementById('kqkt').value;
+      const username = localStorage.getItem('username');
+      const url = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/export-excel-sold?sort=tdlap:desc,khmshdon:asc,shdon:desc&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};nbmst==${username};ttxly==${ketQuaKiemTra}&type=purchase`;
+
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại");
+            $('#loadingModal1').modal('hide');
+            return;
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          saveAs(blob, 'DANH SÁCH HÓA ĐƠN .xlsx');
+          $('#loadingModal1').modal('hide');
+        })
+        .catch(error => {
+          handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+          $('#loadingModal1').modal('hide');
+        });
+    }
+
+    function downloadSaleExcel() {
+      $('#loadingModal2').modal('show');
+      const token = localStorage.getItem('token');
+      const startDateValue = document.getElementById('startDatesold').value;
+      const endDateValue = document.getElementById('endDatesold').value;
+      // Format the dates to match the desired format (MM/DD/YYYY)
+      const formattedStartDate = formatDate(startDateValue, true);
+      const formattedEndDate = formatDate(endDateValue);
+      const username = localStorage.getItem('username');
+
+      const url = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/export-excel?sort=tdlap:desc,khmshdon:asc,shdon:desc&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};nmmst==${username}`;
+
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại");
+            $('#loadingModal2').modal('hide');
+            return;
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          saveAs(blob, 'DANH SÁCH HÓA ĐƠN .xlsx');
+          $('#loadingModal2').modal('hide');
+        })
+        .catch(error => {
+          handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+          $('#loadingModal2').modal('hide');
+        });
+    }
+  </script>
 </body>
 
 </html>

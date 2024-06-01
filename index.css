@@ -1,0 +1,66 @@
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .tab {
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .tab button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin: 0 2px;
+    }
+
+    .tab button:hover {
+      background-color: #0056b3;
+    }
+
+    .tab button.active {
+      background-color: #0056b3;
+    }
+
+    .tabcontent {
+      display: none;
+    }
+
+    .message {
+      margin-top: 20px;
+    }
+
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .message {
+      margin-top: 20px;
+    }
+
+    #errorModalBody{
+        z-index: 9999;
+    }
+
+    #errorModal{
+        z-index: 9999;
+    }
