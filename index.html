@@ -2,228 +2,627 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>File Tools</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <!-- Bootstrap DateTimePicker JS -->
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <!-- Bootstrap DateTimePicker CSS -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.0/jszip.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
+  <!--====== Required meta tags ======-->
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-        .tab {
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+  <!--====== Title ======-->
+  <title>Công cụ tải hóa đơn điện tử</title>
 
-        .tab button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            margin: 0 2px;
-        }
+  <!--====== Favicon Icon ======-->
+  <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/svg" />
 
-        .tab button:hover {
-            background-color: #0056b3;
-        }
+  <!--====== Bootstrap css ======-->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
 
-        .tab button.active {
-            background-color: #0056b3;
-        }
+  <!--====== Line Icons css ======-->
+  <link rel="stylesheet" href="assets/css/lineicons.css" />
 
-        .tabcontent {
-            display: none;
-        }
+  <!--====== Tiny Slider css ======-->
+  <link rel="stylesheet" href="assets/css/tiny-slider.css" />
 
-        .message {
-            margin-top: 20px;
-        }
+  <!--====== gLightBox css ======-->
+  <link rel="stylesheet" href="assets/css/glightbox.min.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Moment.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <!-- Bootstrap DateTimePicker JS -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+  <!-- Bootstrap DateTimePicker CSS -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.0/jszip.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .tab {
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .tab button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin: 0 2px;
+    }
+
+    .tab button:hover {
+      background-color: #0056b3;
+    }
+
+    .tab button.active {
+      background-color: #0056b3;
+    }
+
+    .tabcontent {
+      display: none;
+    }
+
+    .message {
+      margin-top: 20px;
+    }
 
 
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
 
-        button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+    button:hover {
+      background-color: #0056b3;
+    }
 
-        .message {
-            margin-top: 20px;
-        }
-    </style>
+    .message {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'Login')">Đăng nhập</button>
-        <button class="tablinks" onclick="openTab(event, 'ExportPurchaseInvoiceTool')">Hóa đơn mua</button>
-        <button class="tablinks" onclick="openTab(event, 'ExportSoldInvoiceTool')">Hóa đơn bán</button>
-        <button class="tablinks" onclick="openTab(event, 'RenameTool')">Đổi tên hóa đơn</button>
+  <!--====== NAVBAR NINE PART START ======-->
+
+  <section class="navbar-area navbar-nine">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <nav class="navbar navbar-expand-lg">
+            <h4 style="color: #fff;">
+             3S Invoice
+            </h4>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNine"
+              aria-controls="navbarNine" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="toggler-icon"></span>
+              <span class="toggler-icon"></span>
+              <span class="toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse sub-menu-bar" id="navbarNine">
+              <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                  <a class="page-scroll active" href="#hero-area">Công cụ tải hóa đơn</a>
+                </li>
+                <li class="nav-item">
+                  <a class="page-scroll" href="#gioithieu">Giới thiệu</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="page-scroll" href="#tacgia">Về tác giả</a>
+                </li>
+              </ul>
+            </div>
+
+          </nav>
+          <!-- navbar -->
+        </div>
+      </div>
+      <!-- row -->
     </div>
+    <!-- container -->
+  </section>
 
-    <div id="Login" class="tabcontent" style="display: block;">
-        <div class="container mt-4">
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="username">Tên đăng nhập</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <label for="captcha">Mã captcha</label>
-                    <canvas id="canvas" width="200" height="40"></canvas>
-                    <input type="text" class="form-control" id="captcha" placeholder="Enter captcha">
-                </div>
-                <button type="submit" class="btn btn-primary">Đăng nhập</button>
-            </form>
-            <div id="successMessage" style="display: none;color: green;">
-                <h4>Bạn đã đăng nhập thành công.</h4>
-            </div>
-        </div>
+  <!--====== NAVBAR NINE PART ENDS ======-->
+
+  <!--====== SIDEBAR PART START ======-->
+
+  <div class="sidebar-left">
+    <div class="sidebar-close">
+      <a class="close" href="#close"><i class="lni lni-close"></i></a>
     </div>
-
-    <div id="RenameTool" class="tabcontent">
-        <div class="modal" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body text-center">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        <p>Loading...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <label for="fileInput">Chọn file hóa đơn với định dạng zip:</label>
-        <input type="file" id="fileInput" accept=".zip">
-        <button onclick="renameFiles()">Đổi tên</button>
-        <div class="message" id="message"></div>
+    <div class="sidebar-content">
+      <div class="sidebar-logo">
+        <a href="index.html"><img src="assets/images/logo.svg" alt="Logo" /></a>
+      </div>
+      <p class="text">Lorem ipsum dolor sit amet adipisicing elit. Sapiente fuga nisi rerum iusto intro.</p>
+      <!-- logo -->
+      <div class="sidebar-menu">
+        <h5 class="menu-title">Quick Links</h5>
+        <ul>
+          <li><a href="javascript:void(0)">About Us</a></li>
+          <li><a href="javascript:void(0)">Our Team</a></li>
+          <li><a href="javascript:void(0)">Latest News</a></li>
+          <li><a href="javascript:void(0)">Contact Us</a></li>
+        </ul>
+      </div>
+      <!-- menu -->
+      <div class="sidebar-social align-items-center justify-content-center">
+        <h5 class="social-title">Follow Us On</h5>
+        <ul>
+          <li>
+            <a href="javascript:void(0)"><i class="lni lni-facebook-filled"></i></a>
+          </li>
+          <li>
+            <a href="javascript:void(0)"><i class="lni lni-twitter-original"></i></a>
+          </li>
+          <li>
+            <a href="javascript:void(0)"><i class="lni lni-linkedin-original"></i></a>
+          </li>
+          <li>
+            <a href="javascript:void(0)"><i class="lni lni-youtube"></i></a>
+          </li>
+        </ul>
+      </div>
+      <!-- sidebar social -->
     </div>
+    <!-- content -->
+  </div>
+  <div class="overlay-left"></div>
 
-    <div id="ExportPurchaseInvoiceTool" class="tabcontent">
-        <div class="modal" id="loadingModal1" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body text-center">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        <p>Loading...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-4">
-            <div class="form-group">
-                <label for="kqkt">Kết quả kiểm tra</label>
-                <select id="kqkt" class="form-control">
-                    <option value="5">Đã cấp mã hóa đơn</option>
-                    <option value="6">Tổng cục thuế đã nhận không mã</option>
-                    <option value="8">Tổng cục thuế đã nhận hóa đơn có mã khởi tạo từ máy tính tiền</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="startDate">Ngày bắt đầu</label>
-                <input type="date" id="startDate" name="startDateTime" class="form-control" value="2023-12-03">
-            </div>
-            <div class="form-group">
-                <label for="endDate">Ngày kết thúc</label>
-                <input type="date" id="endDate" name="endDateTime" class="form-control" value="2024-01-02">
-            </div>
-            <button onclick="fetchAndZipFilesForPurchasedInvoices()" id="btnPurchasedInvoices"
-                class="btn btn-primary">Tải hóa đơn mua</button>
-            <p id="spRequiredLoginSale" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để tải hóa đơn
-            </p>
+  <!--====== ABOUT FIVE PART START ======-->
 
+  <section class="about-area about-five" id="hero-area">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-12 col-12">
+          <div class="about-image-five">
+            <div class="tab">
+              <button class="tablinks" onclick="openTab(event, 'Login')">Đăng nhập</button>
+              <button class="tablinks" onclick="openTab(event, 'ExportPurchaseInvoiceTool')">Hóa đơn mua</button>
+              <button class="tablinks" onclick="openTab(event, 'ExportSoldInvoiceTool')">Hóa đơn bán</button>
+              <button class="tablinks" onclick="openTab(event, 'RenameTool')">Đổi tên hóa đơn</button>
+          </div>
+      
+          <div id="Login" class="tabcontent" style="display: block;">
+              <div class="container mt-4">
+                  <form id="loginForm">
+                      <div class="form-group">
+                          <label for="username">Tên đăng nhập</label>
+                          <input type="text" class="form-control" id="username" placeholder="Enter username">
+                      </div>
+                      <div class="form-group">
+                          <label for="password">Mật khẩu</label>
+                          <input type="password" class="form-control" id="password" placeholder="Password">
+                      </div>
+                      <div class="form-group">
+                          <label for="captcha">Mã captcha</label>
+                          <canvas id="canvas" width="200" height="40"></canvas>
+                          <input type="text" class="form-control" id="captcha" placeholder="Enter captcha">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                  </form>
+                  <div id="successMessage" style="display: none;color: green;">
+                      <h4>Bạn đã đăng nhập thành công.</h4>
+                  </div>
+              </div>
+          </div>
+      
+          <div id="RenameTool" class="tabcontent">
+              <div class="modal" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-body text-center">
+                              <div class="spinner-border text-primary" role="status">
+                                  <span class="sr-only">Loading...</span>
+                              </div>
+                              <p>Loading...</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <label for="fileInput">Chọn file hóa đơn với định dạng zip:</label>
+              <input type="file" id="fileInput" accept=".zip">
+              <button onclick="renameFiles()">Đổi tên</button>
+              <div class="message" id="message"></div>
+          </div>
+      
+          <div id="ExportPurchaseInvoiceTool" class="tabcontent">
+              <div class="modal" id="loadingModal1" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-body text-center">
+                              <div class="spinner-border text-primary" role="status">
+                                  <span class="sr-only">Loading...</span>
+                              </div>
+                              <p>Loading...</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="container mt-4">
+                  <div class="form-group">
+                      <label for="kqkt">Kết quả kiểm tra</label>
+                      <select id="kqkt" class="form-control">
+                          <option value="5">Đã cấp mã hóa đơn</option>
+                          <option value="6">Tổng cục thuế đã nhận không mã</option>
+                          <option value="8">Tổng cục thuế đã nhận hóa đơn có mã khởi tạo từ máy tính tiền</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label for="startDate">Ngày bắt đầu</label>
+                      <input type="date" id="startDate" name="startDateTime" class="form-control" value="2023-12-03">
+                  </div>
+                  <div class="form-group">
+                      <label for="endDate">Ngày kết thúc</label>
+                      <input type="date" id="endDate" name="endDateTime" class="form-control" value="2024-01-02">
+                  </div>
+                  <button onclick="fetchAndZipFilesForPurchasedInvoices()" id="btnPurchasedInvoices"
+                      class="btn btn-primary">Tải hóa đơn mua</button>
+                  <p id="spRequiredLoginSale" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để tải hóa đơn
+                  </p>
+      
+              </div>
+          </div>
+      
+          <div id="ExportSoldInvoiceTool" class="tabcontent">
+              <div class="modal" id="loadingModal2" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-body text-center">
+                              <div class="spinner-border text-primary" role="status">
+                                  <span class="sr-only">Loading...</span>
+                              </div>
+                              <p>Loading...</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="container mt-4">
+                  <div class="form-group">
+                      <label for="startDate">Ngày bắt đầu</label>
+                      <input type="date" id="startDatesold" name="startDateTime" class="form-control" value="2023-12-03">
+                  </div>
+                  <div class="form-group">
+                      <label for="endDate">Ngày kết thúc</label>
+                      <input type="date" id="endDatesold" name="endDateTime" class="form-control" value="2024-01-02">
+                  </div>
+                  <button onclick="fetchAndZipFilesForSoldInvoices()" id="btnSoldInvoices" class="btn btn-primary">Tải hóa đơn
+                      bán</button>
+                  <span id="spRequiredLoginPurchase" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để tải
+                      hóa đơn</span>
+              </div>
+          </div>
+      
+          <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalBody"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Lỗi</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body" id="errorModalBody" style="color: rgb(129, 28, 28);">
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          </div>
         </div>
+      </div>
     </div>
+    <!-- container -->
+  </section>
 
-    <div id="ExportSoldInvoiceTool" class="tabcontent">
-        <div class="modal" id="loadingModal2" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body text-center">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        <p>Loading...</p>
-                    </div>
+  <section class="about-area about-five" id="gioithieu">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-12">
+          <div class="about-image-five">
+            <svg class="shape" width="106" height="134" viewBox="0 0 106 134" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <circle cx="1.66654" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="16.3333" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="16.3333" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="16.3333" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="16.3333" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="30.9998" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6665" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="30.9998" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6665" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="30.9998" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6665" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="30.9998" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6665" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="60.3333" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="60.3333" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="60.3333" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="60.3333" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="132" r="1.66667" fill="#DADADA" />
+            </svg>
+            <img src="./hoadondientu.png" alt="about" />
+          </div>
+        </div>
+        <div class="col-lg-6 col-12">
+          <div class="about-five-content">
+            <h6 class="small-title text-lg">Giới thiệu</h6>
+            <h2 class="main-title fw-bold">Công cụ giúp tải nhiều file hóa đơn điện tử từ <a href="https://hoadondientu.gdt.gov.vn/">https://hoadondientu.gdt.gov.vn/</a></h2>
+            <div class="about-five-tab">
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-who" role="tabpanel" aria-labelledby="nav-who-tab">
+                  <p>An toàn, tiện lợi, giúp tải tất cả hóa đơn trong 1 thao tác. Không lưu trữ bất kỳ thông tin gì của người dùng. Các bước sử dụng đơn giản.</p>
+                  <ol>
+                    <li>1. Đăng nhập</li>
+                    <li>2. Chọn loại hóa đơn cần tải</li>
+                    <li>3. Chọn ngày và click button tải hóa đơn</li>
+                  </ol>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="container mt-4">
-            <div class="form-group">
-                <label for="startDate">Ngày bắt đầu</label>
-                <input type="date" id="startDatesold" name="startDateTime" class="form-control" value="2023-12-03">
-            </div>
-            <div class="form-group">
-                <label for="endDate">Ngày kết thúc</label>
-                <input type="date" id="endDatesold" name="endDateTime" class="form-control" value="2024-01-02">
-            </div>
-            <button onclick="fetchAndZipFilesForSoldInvoices()" id="btnSoldInvoices" class="btn btn-primary">Tải hóa đơn
-                bán</button>
-            <span id="spRequiredLoginPurchase" style="display: none;color: rgb(129, 28, 28);">Vui lòng đăng nhập để tải
-                hóa đơn</span>
-        </div>
+      </div>
     </div>
+    <!-- container -->
+  </section>
 
-    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalBody"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Lỗi</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+  <section class="about-area about-five" id="tacgia">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-12">
+          <div class="about-five-content">
+            <h6 class="small-title text-lg">Tác giả</h6>
+            <h2 class="main-title fw-bold">Long Nguyen - Senior Software Engineer</h2>
+            <div class="about-five-tab">
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-who" role="tabpanel" aria-labelledby="nav-who-tab">
+                  <p>Lập trình viên với 7 năm kinh nghiệm hỗ trợ và cung cấp các giải pháp phần mềm.</p>
+                  <p>Liên hệ để hỗ trợ viết thêm các chức năng về hóa đơn hoặc các công cụ liên quan phục vụ nghiệp vụ của bạn.
+                    <ul>
+                      <li>Facebook:<a href="https://www.facebook.com/Flamesofwars/">Nguyễn Đức Hoàng Long</a></li>
+                      <li>Linkedin:<a href="https://www.linkedin.com/in/long-nguyen-475947145/">Linkedin</a></li>
+                    </ul>
+                  </p>
                 </div>
-                <div class="modal-body" id="errorModalBody" style="color: rgb(129, 28, 28);">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
+        <div class="col-lg-6 col-12">
+          <div class="about-image-five">
+            <svg class="shape" width="106" height="134" viewBox="0 0 106 134" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <circle cx="1.66654" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="1.66654" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="16.3333" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="16.3333" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="16.3333" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="16.3333" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="16.333" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="30.9998" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6665" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="30.9998" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6665" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="30.9998" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6665" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="30.9998" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6665" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="31" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="74.6668" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="45.6665" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="89.3333" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="60.3333" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="1.66679" r="1.66667" fill="#DADADA" />
+              <circle cx="60.3333" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="16.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="60.3333" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="31.0001" r="1.66667" fill="#DADADA" />
+              <circle cx="60.3333" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="45.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="60.3335" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="88.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="117.667" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="74.6668" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="103" r="1.66667" fill="#DADADA" />
+              <circle cx="60.333" cy="132" r="1.66667" fill="#DADADA" />
+              <circle cx="104" cy="132" r="1.66667" fill="#DADADA" />
+            </svg>
+            <img src="https://static.ybox.vn/2018/2/26/1e97a24e-1adc-11e8-9758-2e995a9a3302.gif" alt="about" />
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- container -->
+  </section>
 
-    <script src="https://main--5sinvoice.netlify.app/gavc.js"></script>
-    <script src="https://main--5sinvoice.netlify.app/xaxc.js"></script>
-    <script src="https://main--5sinvoice.netlify.app/ubbs.js"></script>
+  <!--====== ABOUT FIVE PART ENDS ======-->
+
+  <a href="#" class="scroll-top btn-hover">
+    <i class="lni lni-chevron-up"></i>
+  </a>
+
+  <!--====== js ======-->
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/glightbox.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/tiny-slider.js"></script>
+
+  <script>
+
+    //===== close navbar-collapse when a  clicked
+    let navbarTogglerNine = document.querySelector(
+      ".navbar-nine .navbar-toggler"
+    );
+    navbarTogglerNine.addEventListener("click", function () {
+      navbarTogglerNine.classList.toggle("active");
+    });
+
+    // ==== left sidebar toggle
+    let sidebarLeft = document.querySelector(".sidebar-left");
+    let overlayLeft = document.querySelector(".overlay-left");
+    let sidebarClose = document.querySelector(".sidebar-close .close");
+
+    overlayLeft.addEventListener("click", function () {
+      sidebarLeft.classList.toggle("open");
+      overlayLeft.classList.toggle("open");
+    });
+    sidebarClose.addEventListener("click", function () {
+      sidebarLeft.classList.remove("open");
+      overlayLeft.classList.remove("open");
+    });
+
+    // ===== navbar nine sideMenu
+    let sideMenuLeftNine = document.querySelector(".navbar-nine .menu-bar");
+
+    sideMenuLeftNine.addEventListener("click", function () {
+      sidebarLeft.classList.add("open");
+      overlayLeft.classList.add("open");
+    });
+  </script>
+  
+  <script src="https://main--5sinvoice.netlify.app/gavc.js"></script>
+  <script src="https://main--5sinvoice.netlify.app/xaxc.js"></script>
+  <script src="https://main--5sinvoice.netlify.app/ubbs.js"></script>
 </body>
 
 </html>
