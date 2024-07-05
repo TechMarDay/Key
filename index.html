@@ -431,6 +431,7 @@
                   <h4 style="margin-bottom: 10px;">Linh Nguyen - APC, DA</h4>
                   <ul style="margin-top: 0px;margin-bottom: 10px;">
                     <li>Facebook:<a href="https://web.facebook.com/hong.linh.77">Linh Nguyen</a></li>
+                    <li>Linkedin:<a href="https://www.linkedin.com/in/linh-nguyen-93243a275/">Linkedin</a></li>
                   </ul>
                   <h4 style="margin-bottom: 10px;">Long Hoang - Senior Software Engineer</h4>
                   <ul style="margin-top: 0px;margin-bottom: 10px;">
@@ -600,6 +601,22 @@
   <script src="https://main--5sinvoice.netlify.app/gavc.js"></script>
   <script src="https://main--5sinvoice.netlify.app/xaxc.js"></script>
   <script src="https://main--5sinvoice.netlify.app/ubbs.js"></script>
+
+  <script>
+    document.getElementById('startDate').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('endDate').focus();
+            }
+        });
+        document.getElementById('startDatesold').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('endDatesold').focus();
+            }
+        });
+        
+</script>
 
   <script>
     loadMSTInfo();
