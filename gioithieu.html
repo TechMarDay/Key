@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--====== Required meta tags ======-->
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description"
+        content="Công cụ giúp tải nhiều file hóa đơn điện tử từ https://hoadondientu.gdt.gov.vn/. An toàn, tiện lợi, giúp tải tất cả hóa đơn trong 1 thao tác" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!--====== Title ======-->
+    <title>Công cụ tải hóa đơn điện tử</title>
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/svg" />
+
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+
+    <!--====== Line Icons css ======-->
+    <link rel="stylesheet" href="assets/css/lineicons.css" />
+
+    <!--====== Tiny Slider css ======-->
+    <link rel="stylesheet" href="assets/css/tiny-slider.css" />
+
+    <!--====== gLightBox css ======-->
+    <link rel="stylesheet" href="assets/css/glightbox.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <!-- Bootstrap DateTimePicker JS -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Bootstrap DateTimePicker CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.0/jszip.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="index.css" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #000;
+            background-color: #fff;
+        }
+
+        .content {
+            margin: 40px;
+            margin-top: 0px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .content h3 {
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .content h4 {
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: red;
+        }
+
+        .content ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .content ul li {
+            margin-bottom: 10px;
+        }
+
+        .cta1 {
+            font-weight: bold;
+            /* text-align: center; */
+            margin-top: 40px;
+        }
+
+        .cta {
+            color: red;
+            font-weight: bold;
+            /* text-align: center; */
+        }
+    </style>
+</head>
+
+<body>
+    <!--====== NAVBAR NINE PART START ======-->
+
+    <section class="navbar-area navbar-nine">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg">
+                        <h4 style="color: #fff;">
+                            DX Invoice
+                        </h4>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNine" aria-controls="navbarNine" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarNine">
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item">
+                                    <a class="page-scroll" href="index.html">Công cụ tải hóa đơn</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="page-scroll active" href="#">Giới thiệu</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="page-scroll" href="index.html">Hướng dẫn sử dụng</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="page-scroll" href="index.html">Về tác giả</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                    <!-- navbar -->
+                </div>
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </section>
+
+    <!--====== NAVBAR NINE PART ENDS ======-->
+
+    <!--====== SIDEBAR PART START ======-->
+
+    <div class="sidebar-left">
+        <div class="sidebar-close">
+            <a class="close" href="#close"><i class="lni lni-close"></i></a>
+        </div>
+        <div class="sidebar-content">
+            <div class="sidebar-logo">
+                <a href="index.html"><img src="assets/images/logo.svg" alt="Logo" /></a>
+            </div>
+            <p class="text">Lorem ipsum dolor sit amet adipisicing elit. Sapiente fuga nisi rerum iusto intro.</p>
+            <!-- logo -->
+            <div class="sidebar-menu">
+                <h5 class="menu-title">Quick Links</h5>
+                <ul>
+                    <li><a href="javascript:void(0)">About Us</a></li>
+                    <li><a href="javascript:void(0)">Our Team</a></li>
+                    <li><a href="javascript:void(0)">Latest News</a></li>
+                    <li><a href="javascript:void(0)">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- menu -->
+            <div class="sidebar-social align-items-center justify-content-center">
+                <h5 class="social-title">Follow Us On</h5>
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)"><i class="lni lni-facebook-filled"></i></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><i class="lni lni-twitter-original"></i></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><i class="lni lni-linkedin-original"></i></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"><i class="lni lni-youtube"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar social -->
+        </div>
+        <!-- content -->
+    </div>
+    <div class="overlay-left"></div>
+
+    <!--====== ABOUT FIVE PART START ======-->
+    <section class="about-area about-five" id="gioithieu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="content">
+                    <p>
+                        Trong bối cảnh kinh doanh số hóa ngày càng phát triển, việc quản lý và xử lý hóa đơn với số
+                        lượng lớn là vấn đề được nhiều doanh nghiệp quan tâm, đặc biệt là các nhân sự trong lĩnh vực kế
+                        toán, kiểm toán. Làm sao để giúp làm việc với hóa đơn điện tử nhanh chóng, an toàn, tiện lợi,
+                        đặc biệt là tải hay đổi tên tất cả hóa đơn trong 1 thao tác khi mà trên trang của chính phủ <a
+                            href="https://hoadondientu.gdt.gov.vn/">https://hoadondientu.gdt.gov.vn/</a> chỉ hỗ trợ tải
+                        1 lần 1 hóa đơn.
+                    </p>
+                    <p>
+                        Hiểu được nhu cầu đó chúng tôi giới thiệu <span class="highlight">DX Invoice</span> - công cụ
+                        tải hóa đơn tiên tiến, giúp doanh nghiệp tối ưu hóa quy trình làm việc và tiết kiệm thời gian.
+                        Phần mềm giúp tải tất cả hóa đơn trong 1 thao tác, không lưu trữ bất kỳ thông tin gì của người
+                        dùng. Các bước sử dụng đơn giản và quan trọng là chúng tôi cung cấp <span class="highlight">HOÀN
+                            TOÀN MIỄN PHÍ</span>.
+                    </p>
+                    <p>Nếu bạn muốn phát triển góp ý hoặc muốn phát triển thêm tính năng hãy liên hệ chúng tôi!</p>
+                    <div class="about-image-five">
+                        <svg class="shape" width="106" height="134" viewBox="0 0 106 134" fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="1.66654" cy="1.66679" r="1.66667" fill="#DADADA" />
+                          <circle cx="1.66654" cy="16.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="1.66654" cy="31.0001" r="1.66667" fill="#DADADA" />
+                          <circle cx="1.66654" cy="45.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="1.66654" cy="60.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="1.66654" cy="88.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="1.66654" cy="117.667" r="1.66667" fill="#DADADA" />
+                          <circle cx="1.66654" cy="74.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="1.66654" cy="103" r="1.66667" fill="#DADADA" />
+                          <circle cx="1.66654" cy="132" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.3333" cy="1.66679" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.3333" cy="16.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.3333" cy="31.0001" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.3333" cy="45.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.333" cy="60.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.333" cy="88.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.333" cy="117.667" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.333" cy="74.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.333" cy="103" r="1.66667" fill="#DADADA" />
+                          <circle cx="16.333" cy="132" r="1.66667" fill="#DADADA" />
+                          <circle cx="30.9998" cy="1.66679" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6665" cy="1.66679" r="1.66667" fill="#DADADA" />
+                          <circle cx="30.9998" cy="16.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6665" cy="16.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="30.9998" cy="31.0001" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6665" cy="31.0001" r="1.66667" fill="#DADADA" />
+                          <circle cx="30.9998" cy="45.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6665" cy="45.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="31" cy="60.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6668" cy="60.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="31" cy="88.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6668" cy="88.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="31" cy="117.667" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6668" cy="117.667" r="1.66667" fill="#DADADA" />
+                          <circle cx="31" cy="74.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6668" cy="74.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="31" cy="103" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6668" cy="103" r="1.66667" fill="#DADADA" />
+                          <circle cx="31" cy="132" r="1.66667" fill="#DADADA" />
+                          <circle cx="74.6668" cy="132" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="1.66679" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="1.66679" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="16.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="16.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="31.0001" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="31.0001" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="45.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="45.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="60.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="60.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="88.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="88.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="117.667" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="117.667" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="74.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="74.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="103" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="103" r="1.66667" fill="#DADADA" />
+                          <circle cx="45.6665" cy="132" r="1.66667" fill="#DADADA" />
+                          <circle cx="89.3333" cy="132" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.3333" cy="1.66679" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="1.66679" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.3333" cy="16.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="16.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.3333" cy="31.0001" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="31.0001" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.3333" cy="45.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="45.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.333" cy="60.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="60.3335" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.333" cy="88.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="88.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.333" cy="117.667" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="117.667" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.333" cy="74.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="74.6668" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.333" cy="103" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="103" r="1.66667" fill="#DADADA" />
+                          <circle cx="60.333" cy="132" r="1.66667" fill="#DADADA" />
+                          <circle cx="104" cy="132" r="1.66667" fill="#DADADA" />
+                        </svg>
+                        <img src="./hoadondientu.png" alt="about" />
+                      </div>
+                    <h4>Những tính năng nổi bật của DX Invoice:</h4>
+                    <ul>
+                        <li><b>1. Xem thông tin thuế chi tiết:</b> Chỉ với vài thao tác đơn giản, bạn có thể truy cập và xem các
+                            thông tin quan trọng như Mã số thuế, Mã cơ quan Thuế, Tên cơ quan thuế, Tên người nộp thuế,
+                            Địa chỉ trụ sở chính người nộp thuế và nhiều hơn nữa. Điều này giúp doanh nghiệp dễ dàng
+                            theo dõi và quản lý thông tin thuế một cách chính xác.</li>
+                        <li><b>2. Tải hàng loạt hóa đơn mua & bán:</b> Không còn phải tải từng hóa đơn một cách thủ công. DX
+                            Invoice cho phép bạn tải hàng loạt hóa đơn mua và bán một cách nhanh chóng, giúp tiết kiệm
+                            thời gian và giảm thiểu sai sót.</li>
+                        <li><b>3. Tải bản kê mua & bán:</b> Việc tổng hợp và theo dõi bản kê mua và bán chưa bao giờ dễ dàng đến
+                            thế. Với DX Invoice, bạn có thể tải xuống các bản kê này chỉ trong vài giây, hỗ trợ doanh
+                            nghiệp trong việc quản lý và báo cáo.</li>
+                        <li><b>4. Đổi tên hóa đơn hàng loạt:</b> Để đảm bảo tính nhất quán và dễ dàng trong việc tìm kiếm, DX
+                            Invoice cung cấp tính năng đổi tên hóa đơn hàng loạt theo nhu cầu của doanh nghiệp.</li>
+                    </ul>
+
+                    <h4>Lợi ích khi sử dụng DX Invoice:</h4>
+                    <ul>
+                        <li><b>Tối ưu hóa quy trình làm việc:</b> Giảm thiểu công việc thủ công, tăng hiệu suất và tập trung
+                            vào các nhiệm vụ quan trọng hơn.</li>
+                        <li><b>Độ chính xác cao:</b> Hạn chế sai sót trong việc nhập liệu và quản lý hóa đơn.</li>
+                        <li><b>Giao diện thân thiện:</b> Dễ dàng sử dụng ngay cả đối với những người không rành về công nghệ.
+                        </li>
+                        <li><b>Bảo mật thông tin:</b> Mọi dữ liệu của bạn đều được bảo vệ an toàn, đảm bảo tính riêng tư và bảo
+                            mật.</li>
+                    </ul>
+                    <!-- <div class="about-image-five">
+                        <img src="./assets/images/gioithieu.png" alt="about" />
+                      </div> -->
+
+                    <p class="cta1">
+                        Hãy <span class="cta">trải nghiệm DX Invoice miễn phí</span> ngay hôm nay!
+                    </p>
+                    <p>
+                        Đừng để việc quản lý hóa đơn trở thành nỗi lo của bạn. Với DX Invoice, mọi thứ trở nên đơn giản,
+                        hiệu quả và chính xác hơn bao giờ hết. Hãy tham gia cùng hàng ngàn doanh nghiệp đã và đang tin
+                        dùng DX Invoice để nâng tầm quy trình quản lý của họ.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- container -->
+    </section>
+</body>
+
+</html>
