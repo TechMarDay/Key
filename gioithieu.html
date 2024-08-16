@@ -131,13 +131,11 @@
                                     <a class="page-scroll" href="index.html">Công cụ tải hóa đơn</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="page-scroll active" href="#">Giới thiệu</a>
-                                </li>
-
-                                <li class="nav-item">
                                     <a class="page-scroll" href="index.html">Hướng dẫn sử dụng</a>
                                 </li>
-
+                                <li class="nav-item">
+                                    <a class="page-scroll active" href="#" target="_self">Giới thiệu</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="page-scroll" href="index.html">Về tác giả</a>
                                 </li>
@@ -350,6 +348,183 @@
         </div>
         <!-- container -->
     </section>
+
+    <footer class="footer-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="single-footer-widget">
+          <h4>DX Invoice</h4>
+          <p>Công cụ giúp tải nhiều file hóa đơn điện tử từ trang web của Tổng Cục Thuế. An toàn, tiện lợi, giúp tải tất cả hóa đơn trong 1 thao tác.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="single-footer-widget">
+          <h4>Liên hệ</h4>
+          <ul class="footer-contact">
+            <li>Email: longdhn.lk@gmail.com</li>
+            <li>Điện thoại: +84 388653287</li>
+            <li>Địa chỉ: 1737 Quốc Lộ 1A, Quận 12, TP. Hồ Chí Minh</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="single-footer-widget">
+          <h4>Theo dõi chúng tôi</h4>
+          <ul class="social-icons">
+            <li><a href="#"><i class="lni lni-facebook-filled"></i></a></li>
+            <li><a href="#"><i class="lni lni-twitter-filled"></i></a></li>
+            <li><a href="#"><i class="lni lni-instagram-filled"></i></a></li>
+            <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <p>&copy; 2024 DX Invoice. Đã đăng ký Bản quyền.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script>
+        document.getElementById('startDate').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    document.getElementById('endDate').focus();
+                }
+            });
+            document.getElementById('startDatesold').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    document.getElementById('endDatesold').focus();
+                }
+            });
+            
+    </script>
+    
+      <script>
+        loadMSTInfo();
+        function Logout() {
+          localStorage.removeItem('token');
+          localStorage.removeItem('username');
+          location.reload();
+        }
+    
+        function downloadPurchaseExcel() {
+          $('#loadingModal1').modal('show');
+          const token = localStorage.getItem('token');
+          const startDateValue = document.getElementById('startDate').value;
+          const endDateValue = document.getElementById('endDate').value;
+          const formattedStartDate = formatDate(startDateValue, true);
+          const formattedEndDate = formatDate(endDateValue);
+          const ketQuaKiemTra = document.getElementById('kqkt').value;
+          const username = localStorage.getItem('username');
+          const url = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/export-excel-sold?sort=tdlap:desc,khmshdon:asc,shdon:desc&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};ttxly==${ketQuaKiemTra}&type=purchase`;
+    
+          fetch(url, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+          })
+            .then(response => {
+              if (!response.ok) {
+                handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại");
+                $('#loadingModal1').modal('hide');
+                return;
+              }
+              return response.blob();
+            })
+            .then(blob => {
+              saveAs(blob, 'DANH SÁCH HÓA ĐƠN .xlsx');
+              $('#loadingModal1').modal('hide');
+            })
+            .catch(error => {
+              handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+              $('#loadingModal1').modal('hide');
+            });
+        }
+    
+        function downloadSaleExcel() {
+          $('#loadingModal2').modal('show');
+          const token = localStorage.getItem('token');
+          const startDateValue = document.getElementById('startDatesold').value;
+          const endDateValue = document.getElementById('endDatesold').value;
+          // Format the dates to match the desired format (MM/DD/YYYY)
+          const formattedStartDate = formatDate(startDateValue, true);
+          const formattedEndDate = formatDate(endDateValue);
+          const username = localStorage.getItem('username');
+    
+          const url = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/export-excel?sort=tdlap:desc,khmshdon:asc,shdon:desc&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate}`;
+    
+          fetch(url, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+          })
+            .then(response => {
+              if (!response.ok) {
+                handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại");
+                $('#loadingModal2').modal('hide');
+                return;
+              }
+              return response.blob();
+            })
+            .then(blob => {
+              saveAs(blob, 'DANH SÁCH HÓA ĐƠN .xlsx');
+              $('#loadingModal2').modal('hide');
+            })
+            .catch(error => {
+              handleError("Xảy ra lỗi khi tải hóa đơn, vui lòng thử lại")
+              $('#loadingModal2').modal('hide');
+            });
+        }
+    
+        async function loadMSTInfo() {
+          const token = localStorage.getItem('token');
+          const tokenExpired = localStorage.getItem('tokeExpired');
+          const twentyFourHoursLater = tokenExpired + (24 * 60 * 60 * 1000);
+          if (token && tokenExpired && Date.now() < twentyFourHoursLater) {
+            const username = localStorage.getItem('username');
+            const response = await fetch(`https://hoadondientu.gdt.gov.vn:30000/category/public/dsdkts/${username}/manager`);
+            if (!response.ok) {
+              throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const data = await response.json();
+    
+            const ul = document.createElement('ul');
+    
+            const items = [`1. Mã số thuế: ${data.mst}`, `2. Mã cơ quan Thuế: ${data.macqt}`, `3. Tên cơ quan thuế: ${data.tencqt}`,
+            `4. Tên người nộp thuế: ${data.tennnt}`,
+            `5. Trạng thái: ${data.tthai}`,
+            `6. Loại người nộp thuế: ${data.loainnt}`,
+            `7. Địa chỉ trụ sở chính người nộp thuế: ${data.dctsdchi}`,
+            `8. Đia chỉ trụ sở tỉnh: ${data.dctstinh}`,
+            `9. Địa chỉ trụ sở huyện: ${data.dctsthuyen}`,
+            `10. Địa chỉ trụ sở xã: ${data.dctstxa}`,
+            ];
+            items.forEach(itemText => {
+                const li = document.createElement('li');
+                li.textContent = itemText;
+                ul.appendChild(li);
+            });
+    
+            // Step 3: Append the <ul> to a container element
+            document.getElementById('list-mst').appendChild(ul);
+            document.getElementById('list-mst').style.display = 'block'; // Show the success message
+          }
+        }
+      </script>
+    
+    <script type="text/javascript" src="https://web.cmbliss.com/webtools/hotline/js/hotline.js"></script><script type="text/javascript">$("body").hotline({phone:"0388653287",p_bottom:true,bottom:0,p_left:true,left:0,bg_color:"#e60808",abg_color:"rgba(230, 8, 8, 0.7)",show_bar:true,position:"fixed",});</script></body>
+    
 </body>
 
 </html>

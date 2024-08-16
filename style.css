@@ -1905,3 +1905,163 @@ p {
   color: var(--white);
   background-color: var(--primary-dark);
 }
+#huongdansudung {
+  padding: 60px 0;
+  background-color: #f9f9f9;
+}
+
+#huongdansudung .section-title {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#huongdansudung .title {
+  font-size: 36px;
+  color: #343a40;
+  font-weight: bold;
+}
+
+#huongdansudung .content {
+  text-align: center;
+}
+
+#huongdansudung .video-section {
+  margin-bottom: 40px;
+}
+
+#huongdansudung a {
+  color: #007bff;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+#huongdansudung iframe {
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+#huongdansudung .steps-section {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+#huongdansudung ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+  margin-top: 20px;
+}
+
+#huongdansudung ol li {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #495057;
+}
+
+#huongdansudung img {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#huongdansudung .highlight {
+  background-color: #e9ecef;
+  padding: 15px;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+.about-area {
+    padding: 60px 0;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.content {
+    text-align: left;
+    color: #333;
+}
+
+.content p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.content a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.content a:hover {
+    text-decoration: underline;
+}
+
+.highlight {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.about-image {
+    position: relative;
+    margin: 40px 0;
+}
+
+.about-image .shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.about-image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.features-list, .benefits-list {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.features-list li, .benefits-list li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.features-list b, .benefits-list b {
+    color: #007bff;
+}
+
+.cta {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.cta-highlight {
+    color: #ff5722;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0; /* Tạo khoảng cách trên và dưới hình ảnh */
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; /* Thêm bo góc để hình ảnh trông mềm mại hơn */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ để tạo độ sâu */
+}
