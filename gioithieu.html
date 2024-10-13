@@ -423,8 +423,12 @@
           const formattedEndDate = formatDate(endDateValue);
           const ketQuaKiemTra = document.getElementById('kqkt').value;
           const username = localStorage.getItem('username');
-          const url = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/export-excel-sold?sort=tdlap:desc,khmshdon:asc,shdon:desc&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};ttxly==${ketQuaKiemTra}&type=purchase`;
-    
+          let url = `https://hoadondientu.gdt.gov.vn:30000/query/invoices/export-excel-sold?sort=tdlap:desc,khmshdon:asc,shdon:desc&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};ttxly==${ketQuaKiemTra}&type=purchase`;
+
+          if (ketQuaKiemTra == 8) {
+            url = `https://hoadondientu.gdt.gov.vn:30000/sco-query/invoices/export-excel-sold?sort=tdlap:desc,khmshdon:asc,shdon:desc&search=tdlap=ge=${formattedStartDate};tdlap=le=${formattedEndDate};ttxly==${ketQuaKiemTra}&type=purchase`;
+          }
+
           fetch(url, {
             method: 'GET',
             headers: {
